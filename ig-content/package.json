@@ -1,0 +1,19 @@
+{
+  "name": "ig-content",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bluebird": "^2.10.1",
+    "grunt": "^0.4.5",
+    "grunt-aws-lambda": "^0.10.0",
+    "intercom-client": "^1.1.0",
+    "request": "^2.64.0",
+    "underscore": "^1.8.3"
+  }
+}
