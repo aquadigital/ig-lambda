@@ -23,7 +23,10 @@ exports.handler = function (event, context) {
           return self.getContent(user);
         })
         .each(function(result) {
-          return self.sendMessage(result.user, result.content);
+          return self.sendMessage(result.user, result.content)
+          .then(function(user) {
+            return self.updateUserLastSent(user);
+          });
         })
         .then(function() {
           context.done(null, 'content-notification complete.');
@@ -85,20 +88,21 @@ exports.handler = function (event, context) {
         }
 
         self.client.messages.create(message, function() {
-          resolve();
+          resolve(user);
         });
       });
     },
-    updateUserLastSent: function() {
+    updateUserLastSent: function(user) {
       var self = this;
       return new Promise(function (resolve, reject) {
         var postData = {
-          id: '554e4b2585fc0947e600c68b',
+          id: user.id,
           custom_attributes: {
             'last-suggested-content': moment().format()
           }
         }
-        config.intercomClient.users.create(postData, function (r) {
+
+        self.client.users.create(postData, function (r) {
           resolve();
         });
       });
