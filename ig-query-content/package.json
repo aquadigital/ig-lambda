@@ -1,0 +1,21 @@
+{
+  "name": "igQueryContent",
+  "description": "Igniter Content Query",
+  "version": "0.0.1",
+  "main": "index.js",
+  "private": "true",
+  "dependencies": {
+    "bluebird": "^2.10.1",
+    "moment": "^2.10.6",
+    "request": "^2.64.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "grunt": "0.4.*",
+    "grunt-pack": "0.1.*",
+    "grunt-aws-lambda": "0.1.*"
+  },
+  "bundledDependencies": [
+    "request"
+  ]
+}

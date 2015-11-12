@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 var _ = require('underscore');
 var moment = require('moment');
 var config = {
-  testEvent: 'http://api2.socialmention.com/search?q=iphone+apps&f=json&t=blogs&lang=en',
+  //testEvent: 'iphone+apps&t=blogs',
   intercomID: 'dmqf1z3p',
   intercomKey: '692af63d625d711408ec565f121720c99bb6f6ed',
   intercomClient: {}
@@ -13,6 +13,7 @@ var config = {
 exports.handler = function (event, context) {
   var script = {
     client: {},
+    contentUrl: 'http://api2.socialmention.com/search?lang=en&f=json&t=blogs&from_ts=86400&q=',
     segmentId: '563e604c1d0a4489dc0000a6',
     init: function() {
       var self = this;
@@ -36,7 +37,16 @@ exports.handler = function (event, context) {
     getContent: function(user) {
       var self = this;
       return new Promise(function (resolve, reject) {
-        request(config.testEvent, function (err, response, body) {
+        var keywords = JSON.parse(user['custom_attributes']['content-keywords']);
+        var keywordUrl = '';
+
+        _.each(keywords, function(item) {
+          keywordUrl += item + '%20';
+        });
+
+        var requestUrl = self.contentUrl + keywordUrl;
+
+        request(requestUrl, function (err, response, body) {
           if (err) console.log(err, err.stack);
 
           var content = '';
@@ -98,7 +108,8 @@ exports.handler = function (event, context) {
         var postData = {
           id: user.id,
           custom_attributes: {
-            'last-suggested-content': moment().format()
+            'last-suggested-content': moment().format(),
+            //'content-keywords': JSON.stringify(['tester','test'])
           }
         }
 
