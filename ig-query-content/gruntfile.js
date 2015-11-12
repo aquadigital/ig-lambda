@@ -8,7 +8,7 @@ grunt.initConfig({
   },
   lambda_deploy: {
     default: {
-      arn: 'arn:aws:lambda:us-west-2:731103058072:function:igScheduleContent'
+      arn: 'arn:aws:lambda:us-west-2:731103058072:function:igQueryContent'
     }
   },
   lambda_package: {
